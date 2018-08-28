@@ -1,12 +1,10 @@
 /* app.js
  *
- * This is our RSS feed reader application. It uses the Google
- * Feed Reader API to grab RSS feeds as JSON object we can make
- * use of. It also uses the Handlebars templating library and
- * jQuery.
+ * RSS feed reader application --
+ * Uses the Google Feed Reader API to grab RSS feeds as JSON object
+ * Also uses the Handlebars templating library and jQuery
  */
 
-// The names and URLs to all of the feeds we'd like available.
 // Each feed is an object with a name and URL and is stored in the allFeeds array
 var allFeeds = [
     {
@@ -33,18 +31,17 @@ function init() {
     loadFeed(0);
 }
 
-/* This function performs everything necessary to load a
- * feed using the Google Feed Reader API. It will then
- * perform all of the DOM operations required to display
- * feed entries on the page. Feeds are referenced by their
- * index position within the allFeeds array.
- * This function all supports a callback as the second parameter
- * which will be called after everything has run successfully.
+/* Function to perform all that is necessary to load a feed using Google Feed Reader API.
+    * Then performs all of the DOM operations required to display feed entries on page.
+    * Feeds are referenced by their index position within the allFeeds array.
+    * Function also supports a callback as the second parameter which is called after
+    * everything has run successfully.
  */
  function loadFeed(id, cb) {
      var feedUrl = allFeeds[id].url,
          feedName = allFeeds[id].name;
 
+      //Entry template made using Handlebars
      $.ajax({
        type: "POST",
        url: 'https://rsstojson.udacity.com/parseFeed',
@@ -70,6 +67,7 @@ function init() {
                      container.append(entryTemplate(entry));
                  });
 
+                // If there is a callback function as second param, call it
                  if (cb) {
                      cb();
                  }
@@ -87,24 +85,24 @@ function init() {
 /* Google API: Loads the Feed Reader API and defines what function
  * to call when the Feed Reader API is done loading.
  */
-google.setOnLoadCallback(init);
+google.setOnLoadCallback(init); // Call init once loaded
 
 /* All of this functionality is heavily reliant upon the DOM, so we
  * place our code in the $() function to ensure it doesn't execute
  * until the DOM is ready.
  */
 $(function() {
+    // Create feedItemTemplate using Handlebars
     var container = $('.feed'),
         feedList = $('.feed-list'),
         feedItemTemplate = Handlebars.compile($('.tpl-feed-list-item').html()),
         feedId = 0,
         menuIcon = $('.menu-icon-link');
 
-    /* Loop through all of our feeds, assigning an id property to
-     * each of the feeds based upon its index within the array.
-     * Then parse that feed against the feedItemTemplate (created
-     * above using Handlebars) and append it to the list of all
-     * available feeds within the menu.
+    /* Loop through all feeds
+      * Assign each an id property based on index w/in array
+      * Then parse that feed against the feedItemTemplate
+      * Append it to the list of all available feeds w/in the menu
      */
     allFeeds.forEach(function(feed) {
         feed.id = feedId;
@@ -125,8 +123,8 @@ $(function() {
         return false;
     });
 
-    /* When the menu icon is clicked on, we need to toggle a class
-     * on the body to perform the hiding/showing of our menu.
+
+    /* When the menu icon is clicked on, toggle 'menu-hidden' class on body
      */
     menuIcon.on('click', function() {
         $('body').toggleClass('menu-hidden');
