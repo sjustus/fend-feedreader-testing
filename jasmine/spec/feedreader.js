@@ -44,17 +44,15 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* Test suite to test menu functionality */
     describe('The menu', function() {
 
-      /* TODO: Write a test that ensures the menu element is
-       * hidden by default. You'll have to analyze the HTML and
-       * the CSS to determine how we're performing the
-       * hiding/showing of the menu element.
-       */
+      // Test to ensure menu is hidden by default 
         it('should be hidden by default', function() {
-          //when dom loads expect body to have class of 'menu-hidden'
+          const body = document.querySelector('body');
 
+          expect(body.className).toBe('menu-hidden');
+          //expect body.property-to-get-class.toBe('menu-hidden');
 
         });
        /* TODO: Write a test that ensures the menu changes
@@ -69,7 +67,7 @@ $(function() {
     /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
+         * function is called andd completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
