@@ -1,7 +1,4 @@
 /* feedreader.js
- *
- * This is the spec file that Jasmine will read and contains
- * all of the tests that will be run against your application.
  */
 
 /* We're placing all of our tests within the $() function,
@@ -9,18 +6,10 @@
  * to ensure they don't run until the DOM is ready.
  */
 $(function() {
-    /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+
+    /* This test suite checks he RSS Feeds */
     describe('RSS Feeds', function() {
-        /* This is our first test - it tests to make sure that the
-         * allFeeds variable has been defined and that it is not
-         * empty. Experiment with this before you get started on
-         * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
-         * page?
-         */
+
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
@@ -44,7 +33,7 @@ $(function() {
     });
 
 
-    /* Test suite to test menu functionality */
+    /* This test suite checks the menu */
     describe('The menu', function() {
         const body = document.querySelector('body');
 
@@ -69,7 +58,7 @@ $(function() {
 
 
 
-    /* Test suite named "Initial Entries" */
+    /* This test suite checks that entires are loaded */
     describe('Initial Entries', function() {
        //once the loadFeed function is called and completes its work
        beforeEach(function(done) {
@@ -84,10 +73,25 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* This test checks New Feed Selection */
+    describe('New Feed Selection',function() {
+       const feed = document.querySelector('.feed');
+       const feedOne = [];
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+       //once the loadFeed function is called and completes its work
+       beforeEach(function(done) {
+         loadFeed(0);
+         Array.from(feed.children).forEach(function(item) {
+           feedOne.push(item.innerText);
+         });
+         loadFeed(1, done);
+       });
+
+       //make sure when a new feed is loaded that the content actually changes
+       it('should change content', function() {
+         Array.from(feed.children).forEach(function(item, index) {
+           expect(item.innerText).not.toEqual(feedOne[index]);
+         });
+       });
+    });
 }());
