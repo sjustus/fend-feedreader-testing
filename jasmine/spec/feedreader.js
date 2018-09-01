@@ -27,7 +27,7 @@ $(function() {
          it('have a name defined', function() {
            allFeeds.forEach(function(feed) {
              expect(feed.name).toBeDefined();
-             expect(feed.name).not.toBe('');
+             expect(feed.name).not.toBe('', "", 0);
            });
          });
     });
@@ -39,7 +39,7 @@ $(function() {
 
       // Test to ensure menu is hidden by default
         it('should be hidden by default', function() {
-          expect(body.className).toBe('menu-hidden');
+          expect(body.classList.contains('menu-hidden')).toBe(true);
         });
 
         //Test to check that menu appears when clicked and hides when clicked again
@@ -48,11 +48,10 @@ $(function() {
 
           //On first click, expect body to not have class of menu-hidden
           menuIcon.click();
-          expect(body.className).not.toBe('menu-hidden');
+          expect(body.classList.contains('menu-hidden')).toBe(false);
           // On next click, expect body to have a class of menu-hidden
           menuIcon.click();
-          expect(body.className).toBe('menu-hidden');
-
+          expect(body.classList.contains('menu-hidden')).toBe(true);
         });
     });
 
@@ -67,8 +66,9 @@ $(function() {
 
        // the .feed container should have at least one .entry element
        it('should have at least one entry when loaded', function() {
-        const feed = document.querySelector('.feed');
-        expect(feed.children.length).not.toBe(0);
+
+        const entries = document.querySelectorAll('.feed .entry');
+        expect(entries.length).not.toBe(0);
        });
     });
 
